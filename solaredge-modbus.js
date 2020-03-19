@@ -11,7 +11,7 @@ let solar = new SolarEdgeModbusClient({
 module.exports = function(RED) {
 	function numberWithScale(input, strScale){
 		var value = Number(input);
-		var scale = 10^(Number(strScale));
+		var scale = Math.pow(10, Number(strScale));
 		
 		return value * scale;
 	}
