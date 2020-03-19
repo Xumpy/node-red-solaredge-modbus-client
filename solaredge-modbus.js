@@ -14,7 +14,7 @@ module.exports = function(RED) {
         var node = this;
         node.on('input', function(msg) {
             //msg.payload = solar.getData();
-            msg.payload = fs.readFileSync('mock.json');
+            msg.payload = JSON.parse(fs.readFileSync('mock.json'));
             node.send(msg);
         });
     }
