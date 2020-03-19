@@ -20,11 +20,13 @@ module.exports = function(RED) {
 			});
 
 			solar.socket.on("error", (error) => {
-				node.send({	error: error });
+				var msg = { error: error }
+				node.send(msg);
 			});
 			
 			solar.modbusClient.on("error", (error) => {
-				node.send({	error: error });
+				var msg = { error: error }
+				node.send(msg);
 			});
 			
 			setInterval(() => {
