@@ -33,7 +33,7 @@ module.exports = function(RED) {
 			modbus = JSON.parse(fs.readFileSync('mock.json'));
 			var msg = {
 				payload: {
-					'C_Manufacturer': modbus['C_Manufacturer']
+					'C_Manufacturer': modbus
 				}
 			};
 			node.send(msg);
