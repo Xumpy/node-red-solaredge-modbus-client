@@ -18,14 +18,15 @@ module.exports = function(RED) {
 				host: config.host,
 				port: Number(config.port)
 			});
-			socket = solar.socket;
-			socket.on("error", (error) => {
-				console.log("Solar Edge Modbus socket error", error);
+
+			solar.socket.on("error", (error) => {
+				node.send({	error: error });
 			});
-			client = solar.modbusClient;
-			client.on("error", (error) => {
-				console.log("Solar Edge Modbus connection error", error);
+			
+			solar.modbusClient.on("error", (error) => {
+				node.send({	error: error });
 			});
+			
 			setInterval(() => {
 				try {
 					modbus = solar.getData().then((data) => {
