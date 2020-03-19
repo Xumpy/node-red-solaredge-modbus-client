@@ -3,6 +3,7 @@
         category: 'network',
         color: '#a6bbcf',
         defaults: {
+			name: {value:""}
             host: {value:"192.168.1.200"},
 			port: {value:"1502"}
         },
@@ -19,6 +20,14 @@
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-host"><i class="icon-tag"></i> Host</label>
+        <input type="text" id="node-input-host" placeholder="Host">
+    </div>
+    <div class="form-row">
+        <label for="node-input-port"><i class="icon-tag"></i> Port</label>
+        <input type="text" id="node-input-port" placeholder="Port">
     </div>
 </script>
 
