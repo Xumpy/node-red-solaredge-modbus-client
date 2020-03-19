@@ -18,6 +18,9 @@ module.exports = function(RED) {
 				host: config.host,
 				port: Number(config.port)
 			});
+			solar.on("errer", (error) => {
+				console.log("Solar Edge Modbus connection error", error);
+			});
 			setInterval(() => {
 				try {
 					modbus = solar.getData().then((data) => {
