@@ -12,15 +12,12 @@ module.exports = function(RED) {
     function getModbusData(config) {
         RED.nodes.createNode(this,config);
         var node = this;
-		var msg = {
-			payload: "started"
-		};
-		node.send(msg);
-		
-		node.on('input', function(msg) {
-			msg.payload = "started2";
+		setInterval(() => {
+			var msg = {
+				payload: "started"
+			};
 			node.send(msg);
-		});
+		}, 1000);
     }
     RED.nodes.registerType("solaredge-modbus",getModbusData);
 }
