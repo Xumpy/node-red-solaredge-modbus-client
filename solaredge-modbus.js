@@ -13,7 +13,7 @@ module.exports = function(RED) {
 		var value = Number(input);
 		var scale = Math.pow(10, Number(strScale));
 		
-		return  parseFloat((value * scale).toFixed(abs(Number(strScale))));
+		return  parseFloat((value * scale).toFixed(Math.abs(Number(strScale))));
 	}
     function fetchValue(array, name){
 		return array.filter(result => (result.name === name))[0].value;
