@@ -10,10 +10,10 @@ let solar = new SolarEdgeModbusClient({
 
 module.exports = function(RED) {
 	function numberWithScale(input, strScale){
-		var value = parseFloat(input);
-		var scale = Math.pow(10, parseFloat(strScale));
+		var value = Number(input);
+		var scale = Math.pow(10, Number(strScale));
 		
-		return value * scale;
+		return  parseFloat((value * scale).toFixed(abs(Number(strScale))));
 	}
     function fetchValue(array, name){
 		return array.filter(result => (result.name === name))[0].value;
