@@ -1,6 +1,6 @@
 <script type="text/javascript">
-    RED.nodes.registerType('lower-case',{
-        category: 'function',
+    RED.nodes.registerType('solaredge-modbus',{
+        category: 'network',
         color: '#a6bbcf',
         defaults: {
             name: {value:""}
@@ -9,12 +9,12 @@
         outputs:1,
         icon: "file.png",
         label: function() {
-            return this.name||"lower-case";
+            return this.name||"solaredge-modbus";
         }
     });
 </script>
 
-<script type="text/html" data-template-name="lower-case">
+<script type="text/html" data-template-name="solaredge-modbus">
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
@@ -22,5 +22,5 @@
 </script>
 
 <script type="text/html" data-help-name="lower-case">
-    <p>A simple node that converts the message payloads into all lower-case characters</p>
+    <p>A simple node that fetches data from the modbus of solar edge solar panels</p>
 </script>
