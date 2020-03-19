@@ -9,8 +9,8 @@ let solar = new SolarEdgeModbusClient({
 */
 
 module.exports = function(RED) {
-    function fetchFromArray(array, name){
-		return array.filter(result => (result.name === name));
+    function fetchValue(array, name){
+		return array.filter(result => (result.name === name))[0].value;
 	}
 	
 	function getModbusData(config) {
@@ -37,7 +37,7 @@ module.exports = function(RED) {
 			modbus = JSON.parse(fs.readFileSync('mock.json'));
 			var msg = {
 				payload: {
-					'C_Manufacturer': fetchFromArray(modbus, 'I_AC_Energy_WH')
+					'C_Manufacturer': fetchValue(modbus, 'I_AC_Energy_WH')
 				}
 			};
 			node.send(msg);
