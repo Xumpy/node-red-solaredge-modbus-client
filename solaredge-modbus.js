@@ -19,15 +19,8 @@ module.exports = function(RED) {
 				port: Number(config.port)
 			});
 
-			solar.socket.on("error", (error) => {
-				var msg = { error: error }
-				node.send(msg);
-			});
-			
-			solar.modbusClient.on("error", (error) => {
-				var msg = { error: error }
-				node.send(msg);
-			});
+			solar.socket.on("error", (error) => { node.error(error); });
+			solar.modbusClient.on("error", (error) => { node.error(error); });
 			
 			setInterval(() => {
 				try {
