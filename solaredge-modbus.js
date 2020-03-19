@@ -12,15 +12,14 @@ module.exports = function(RED) {
 	}
 	
 	function getModbusData(config) {
-		let solar = new SolarEdgeModbusClient({
-			host: "192.168.1.200",
-			port: 1502
-		})
-
         RED.nodes.createNode(this,config);
         var node = this;
 		setInterval(() => {
 			try {
+				let solar = new SolarEdgeModbusClient({
+					host: config.host,
+					port: config.port
+				})
 				modbus = solar.getData().then((data) => {
 					var msg = {
 						payload: {
