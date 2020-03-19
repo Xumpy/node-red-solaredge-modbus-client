@@ -16,6 +16,11 @@ module.exports = function(RED) {
 			payload = "started";
 		}
 		node.send(msg);
+		
+		node.on('input', function(msg) {
+			msg.payload = "started2";
+			node.send(msg);
+		});
     }
     RED.nodes.registerType("solaredge-modbus",getModbusData);
 }
