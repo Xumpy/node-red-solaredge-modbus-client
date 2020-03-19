@@ -52,13 +52,14 @@ module.exports = function(RED) {
 					node.send(internal_error);
 				}
 			}, 1000);
+			
+			node.on('close', function (){
+				solar.socket.destroy();
+			});
 		} catch (error) {
 			node.send(error);
 		}
 		
-		node.on('close', function (){
-			solar.socket.destroy();
-		});
     }
     RED.nodes.registerType("solaredge-modbus",getModbusData);
 }

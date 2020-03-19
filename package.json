@@ -1,16 +1,17 @@
 {
-  "name": "red-solaredge-modbus-client",
+  "name": "node-red-contrib-solaredge-modbus-client",
   "version": "1.0.0",
   "description": "Node Red Modbus Client for Solar Edge solar panels",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [ "node-red" ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Xumpy/node-red-solaredge-modbus-client.git"
   },
-  "author": "",
+  "author": "Nico Martens",
   "node-red": {
     "nodes": {
       "solaredge": "solaredge-modbus.js"
