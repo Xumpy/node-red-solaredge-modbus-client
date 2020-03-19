@@ -13,8 +13,8 @@ module.exports = function(RED) {
 	
 	function getModbusData(config) {
 		let solar = new SolarEdgeModbusClient({
-			host: config.host,
-			port: config.port
+			host: "192.168.0.200",
+			port: 1502
 		})
 
         RED.nodes.createNode(this,config);
