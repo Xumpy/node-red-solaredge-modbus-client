@@ -13,8 +13,8 @@ module.exports = function(RED) {
         RED.nodes.createNode(this,config);
         var node = this;
 		var msg = {
-			payload = "started";
-		}
+			payload: "started"
+		};
 		node.send(msg);
 		
 		node.on('input', function(msg) {
