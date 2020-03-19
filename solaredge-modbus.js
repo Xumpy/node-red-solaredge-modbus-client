@@ -1,5 +1,3 @@
-let SolarEdgeModbusClient = require('solaredge-modbus-client')
-
 module.exports = function(RED) {
 	function numberWithScale(input, strScale){
 		var value = Number(input);
@@ -15,6 +13,7 @@ module.exports = function(RED) {
         RED.nodes.createNode(this,config);
         var node = this;
 		try{
+			let SolarEdgeModbusClient = require('solaredge-modbus-client')
 			let solar = new SolarEdgeModbusClient({
 				host: config.host,
 				port: Number(config.port)
@@ -49,7 +48,7 @@ module.exports = function(RED) {
 						node.send(msg);
 					});
 				} catch (internal_error) {
-					node.send(internal_error);
+					console.log(internal_error);
 				}
 			}, 1000);
 			
@@ -57,7 +56,7 @@ module.exports = function(RED) {
 				solar.socket.destroy();
 			});
 		} catch (error) {
-			node.send(error);
+			console.log(error);
 		}
 		
     }
