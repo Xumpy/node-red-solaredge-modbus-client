@@ -11,8 +11,9 @@ let solar = new SolarEdgeModbusClient({
 module.exports = function(RED) {
     function fetchFromArray(array, name){
 		array.map(result => {
-			console.log(result);
 			if (result.name === name){
+				console.log(result);
+			
 				return result;
 			}
 		});
