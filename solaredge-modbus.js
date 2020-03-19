@@ -9,6 +9,12 @@ let solar = new SolarEdgeModbusClient({
 */
 
 module.exports = function(RED) {
+	function numberWithScale(input, strScale){
+		var value = Number(input);
+		var scale = 10^(Number(strScale));
+		
+		return value * scale;
+	}
     function fetchValue(array, name){
 		return array.filter(result => (result.name === name))[0].value;
 	}
@@ -23,23 +29,23 @@ module.exports = function(RED) {
 					'Model': fetchValue(modbus, 'C_Model'),
 					'Version': fetchValue(modbus, 'C_Version'),
 					'SerialNumbeer': fetchValue(modbus, 'C_SerialNumber'),
-					'AC Current phase A': fetchValue(modbus, 'I_AC_CurrentA'),
-					'AC Current phase B': fetchValue(modbus, 'I_AC_CurrentB'),
-					'AC Current phase C': fetchValue(modbus, 'I_AC_CurrentC'),
-					'AC Frequency': fetchValue(modbus, 'I_AC_Frequency'),
-					'AC Power output': fetchValue(modbus, 'I_AC_Power'),
-					'AC Total Current': fetchValue(modbus, 'I_AC_Current'),
-					'AC Voltage phase A-B': fetchValue(modbus, 'I_AC_VoltageAB'),
-					'AC Voltage phase A-N': fetchValue(modbus, 'I_AC_VoltageAN'),
-					'AC Voltage phase B-C': fetchValue(modbus, 'I_AC_VoltageBC'),
-					'AC Voltage phase B-N': fetchValue(modbus, 'I_AC_VoltageBN'),
-					'AC Voltage phase C-A': fetchValue(modbus, 'I_AC_VoltageCA'),
-					'AC Voltage phase C-N': fetchValue(modbus, 'I_AC_VoltageCN'),
-					'AC Energy Total WH': fetchValue(modbus, 'I_AC_Energy_WH'),
-					'DC Current': fetchValue(modbus, 'I_DC_Current'),
-					'DC Power input': fetchValue(modbus, 'I_DC_Power'),
-					'DC Voltage': fetchValue(modbus, 'I_DC_Voltage'),
-					'Inverter Temperature':fetchValue(modbus, 'I_Temp_Sink')
+					'AC Current phase A': numberWithScale(fetchValue(modbus, 'I_AC_CurrentA'), fetchValue(modbus, 'I_AC_Current_SF')),
+					'AC Current phase B': numberWithScale(fetchValue(modbus, 'I_AC_CurrentB'), fetchValue(modbus, 'I_AC_Current_SF')),
+					'AC Current phase C': numberWithScale(fetchValue(modbus, 'I_AC_CurrentC'), fetchValue(modbus, 'I_AC_Current_SF')),
+					'AC Total Current': numberWithScale(fetchValue(modbus, 'I_AC_Current'), fetchValue(modbus, 'I_AC_Current_SF')),
+					'AC Frequency': numberWithScale(fetchValue(modbus, 'I_AC_Frequency'), fetchValue(modbus, 'I_AC_Frequency_SF')),
+					'AC Power output': numberWithScale(fetchValue(modbus, 'I_AC_Power'), fetchValue(modbus, 'I_AC_Power_SF')),
+					'AC Voltage phase A-B': numberWithScale(fetchValue(modbus, 'I_AC_VoltageAB'), fetchValue(modbus, 'I_AC_Voltage_SF')),
+					'AC Voltage phase A-N': numberWithScale(fetchValue(modbus, 'I_AC_VoltageAN'), fetchValue(modbus, 'I_AC_Voltage_SF')),
+					'AC Voltage phase B-C': numberWithScale(fetchValue(modbus, 'I_AC_VoltageBC'), fetchValue(modbus, 'I_AC_Voltage_SF')),
+					'AC Voltage phase B-N': numberWithScale(fetchValue(modbus, 'I_AC_VoltageBN'), fetchValue(modbus, 'I_AC_Voltage_SF')),
+					'AC Voltage phase C-A': numberWithScale(fetchValue(modbus, 'I_AC_VoltageCA'), fetchValue(modbus, 'I_AC_Voltage_SF')),
+					'AC Voltage phase C-N': numberWithScale(fetchValue(modbus, 'I_AC_VoltageCN'), fetchValue(modbus, 'I_AC_Voltage_SF')),
+					'AC Total Energy WH': numberWithScale(fetchValue(modbus, 'I_AC_Energy_WH'), fetchValue(modbus, 'I_AC_Energy_WH_SF')),
+					'DC Current': numberWithScale(fetchValue(modbus, 'I_DC_Current'), fetchValue(modbus, 'I_DC_Current_SF')),
+					'DC Power input': numberWithScale(fetchValue(modbus, 'I_DC_Power'), fetchValue(modbus, 'I_DC_Power_SF')),
+					'DC Voltage': numberWithScale(fetchValue(modbus, 'I_DC_Voltage'), fetchValue(modbus, 'I_DC_Voltage_SF')),
+					'Inverter Temperature':numberWithScale(fetchValue(modbus, 'I_Temp_Sink'), fetchValue(modbus, 'I_Temp_SF'))
 				}
 			};
 			node.send(msg);
@@ -47,3 +53,4 @@ module.exports = function(RED) {
     }
     RED.nodes.registerType("solaredge-modbus",getModbusData);
 }
+	
