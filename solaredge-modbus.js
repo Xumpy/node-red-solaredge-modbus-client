@@ -14,6 +14,9 @@ module.exports = function(RED) {
         RED.nodes.createNode(this,config);
         var node = this;
         node.on('input', function(msg) {
+			msg.payload = "started";
+			node.send(msg);
+
 			let poller = new Poller(1000);
 			poller.onPoll(() => {
 				const RELAVENT_DATA = [
