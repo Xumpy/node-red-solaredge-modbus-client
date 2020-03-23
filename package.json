@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [ "node-red" ],
+  "keywords": [
+    "node-red"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Xumpy/node-red-solaredge-modbus-client.git"
@@ -18,11 +20,14 @@
     }
   },
   "dependencies": {
+    "modbus-tcp": "^0.4.13",
+    "serialport": "^8.0.4",
     "solaredge-modbus-client": "^1.0.5"
   },
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Xumpy/node-red-solaredge-modbus-client/issues"
   },
-  "homepage": "https://github.com/Xumpy/node-red-solaredge-modbus-client#readme"
+  "homepage": "https://github.com/Xumpy/node-red-solaredge-modbus-client#readme",
+  "devDependencies": {}
 }

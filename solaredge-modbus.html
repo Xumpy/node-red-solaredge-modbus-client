@@ -5,7 +5,8 @@
         defaults: {
 			name: {value:""},
             host: {value:"192.168.1.200"},
-			port: {value:"1502"}
+			port: {value:"1502"},
+            poll: {value:"1000"}
         },
         inputs:0,
         outputs:1,
@@ -28,6 +29,10 @@
     <div class="form-row">
         <label for="node-input-port"><i class="icon-tag"></i> Port</label>
         <input type="text" id="node-input-port" placeholder="Port">
+    </div>
+    <div class="form-row">
+        <label for="node-input-poll"><i class="icon-tag"></i> Poller</label>
+        <input type="text" id="node-input-poll" placeholder="Poller">
     </div>
 </script>
 
