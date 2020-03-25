@@ -81,7 +81,7 @@ module.exports = function(RED) {
         modbusClient.writer().pipe(socket)
         socket.pipe(modbusClient.reader())
 
-        fetch_device(modbusClient, "inverter", JSON.parse(fs.readFileSync("se-inverter.json")), node, config);
+        fetch_device(modbusClient, "inverter", JSON.parse(fs.readFileSync("./se-inverter.json")), node, config);
     }
 
     RED.nodes.registerType("se-modbus-json",start_node);
