@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    RED.nodes.registerType('solaredge-modbus',{
+    RED.nodes.registerType('se-modbus-json',{
         category: 'network',
         color: '#a6bbcf',
         defaults: {
@@ -12,12 +12,12 @@
         outputs:1,
         icon: "file.png",
         label: function() {
-            return this.name||"solaredge-modbus";
+            return this.name||"se-modbus-json";
         }
     });
 </script>
 
-<script type="text/html" data-template-name="solaredge-modbus">
+<script type="text/html" data-template-name="se-modbus-json">
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">

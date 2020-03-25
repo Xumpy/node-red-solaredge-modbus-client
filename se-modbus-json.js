@@ -84,5 +84,5 @@ module.exports = function(RED) {
         fetch_device(modbusClient, "inverter", JSON.parse(fs.readFileSync("se-inverter.json")), node, config);
     }
 
-    RED.nodes.registerType("solaredge-modbus",start_node);
+    RED.nodes.registerType("se-modbus-json",start_node);
 }
