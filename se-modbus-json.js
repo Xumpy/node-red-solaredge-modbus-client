@@ -103,7 +103,7 @@ module.exports = function(RED) {
                     value: conv_buffer(buffer, map[0], map[1], map[3], device)
                 });
             })
-            node.send(result);
+            node.send({payload: result});
             setTimeout(function () {
                 fetch_device(modbusClient, module, mapping_json, node, config);
             }, config.poll);
