@@ -61,7 +61,7 @@ module.exports = function(RED) {
         });
     }
 
-    async function start_node(config){
+    function start_node(config){
         RED.nodes.createNode(this,config);
         var node = this;
         var socket = Net.connect({ host: config.host, port: config.port })
