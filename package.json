@@ -16,13 +16,11 @@
   "author": "Nico Martens",
   "node-red": {
     "nodes": {
-      "solaredge": "solaredge-modbus.js"
+      "solaredge": "se-modbus-json.js"
     }
   },
   "dependencies": {
-    "modbus-tcp": "^0.4.13",
-    "serialport": "^8.0.4",
-    "solaredge-modbus-client": "^1.0.5"
+    "modbus-tcp": "^0.4.13"
   },
   "license": "ISC",
   "bugs": {
