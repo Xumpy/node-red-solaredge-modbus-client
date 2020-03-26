@@ -94,13 +94,12 @@ async function fetch_device(modbusClient, module, mapping_json, node, config){
         start: mapping_json[0][0] - 1,
         end: mapping_json[mapping_json.length - 1][0] + mapping_json[mapping_json.length - 1][1] - 1
     }
-    let result = new Map();
-    result.set("NM_Module", module);
-    await fetch_register(modbusClient, device.start, device.end).then(buffer => {
+    let result = {NM_Module: module};
+        await fetch_register(modbusClient, device.start, device.end).then(buffer => {
         mapping_json.map(map => {
-            result.set(map[2], conv_buffer(buffer, map[0], map[1], map[3], device));
+            result[map[2]] = conv_buffer(buffer, map[0], map[1], map[3], device);
         })
-        node.send({payload: JSON.stringify([...result])});
+        node.send({payload: result});
         setTimeout(function () {
             fetch_device(modbusClient, module, mapping_json, node, config);
         }, config.poll);
@@ -137,11 +136,11 @@ module.exports = function(RED) {
     RED.nodes.registerType("se-modbus-json",start_node);
 }
 
-module.exports.console = function(){
+module.exports.console = function(host, port, poll){
     var config = {
-        host: "192.168.1.200",
-        port: "1502",
-        poll: "1000"
+        host: host,
+        port: port,
+        poll: poll
     }
     var socket = Net.connect({ host: config.host, port: config.port })
     var modbusClient= new Modbus.Client()
