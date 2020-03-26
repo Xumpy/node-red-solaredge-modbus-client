@@ -144,7 +144,7 @@ module.exports = function(RED) {
     function start_node(config){
         RED.nodes.createNode(this,config);
         let node = this;
-        let redeployment = false;
+        redeployment = false;
         node.status({fill:"red",shape:"ring",text:"disconnected"});
 
         connect_and_fetch(config, node);
