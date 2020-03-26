@@ -116,12 +116,12 @@ function exception_handler(config, node, error){
     node.status({fill:"red",shape:"ring",text:"disconnected"});
     var wait = ms => new Promise((r, j)=>setTimeout(r, ms));
     console.log(node);
-    (async () => { await wait(1000); connect_and_fetch(config, node); })()
+    if (!node.stopped) (async () => { await wait(1000); connect_and_fetch(config, node); })()
 }
 
 async function connect_and_fetch(config, node){
     let socket;
-    node.on('close', function(){ socket.destroy(); node.destroy(); });
+    node.on('close', function(){ node.stopped = true; socket.destroy(); });
     try{
         socket = Net.connect({ host: config.host, port: config.port });
         let modbusClient= new Modbus.Client();
@@ -143,6 +143,7 @@ module.exports = function(RED) {
     function start_node(config){
         RED.nodes.createNode(this,config);
         let node = this;
+        node.stopped = false;
         node.status({fill:"red",shape:"ring",text:"disconnected"});
 
         connect_and_fetch(config, node);
