@@ -109,43 +109,38 @@ async function fetch_device(modbusClient, module, mapping_json, node, config){
     });
 }
 
+async function connect_and_fetch(config, node){
+    let socket = Net.connect({ host: config.host, port: config.port });
+    let modbusClient= new Modbus.Client();
+
+    socket.on('error', function(error){ node.send(error); connect_and_fetch(config, node); });
+    modbusClient.on( 'error', function(error){ node.send(error); connect_and_fetch(config, node); });
+
+    modbusClient.writer().pipe(socket);
+    socket.pipe(modbusClient.reader());
+
+    fetch_device(modbusClient, "inverter", inverter_json, node, config);
+}
+
 module.exports = function(RED) {
     function start_node(config){
         RED.nodes.createNode(this,config);
-        var node = this;
-        var socket = Net.connect({ host: config.host, port: config.port })
-        var modbusClient= new Modbus.Client()
+        let node = this;
+        node.on('close', function(){ socket.destroy(); });
+        node.on('error', function(error){ node.send(error); socket.destroy(); connect_and_fetch(config); });
 
-        node.on('close', function (){
-            socket.destroy();
-        });
-        node.on('error', function(){
-            node.send(error);
-            socket.destroy();
-            start_node(node, config);
-        })
-        socket.on("error", (error) => { node.error(error); start_node(node, config); });
-        modbusClient.on("error", (error) => { node.error(error); start_node(node, config); });
-
-        modbusClient.writer().pipe(socket)
-        socket.pipe(modbusClient.reader())
-
-        fetch_device(modbusClient, "inverter", inverter_json, node, config);
+        connect_and_fetch(config, node);
     }
 
     RED.nodes.registerType("se-modbus",start_node);
 }
 
 module.exports.console = function(host, port, poll){
-    var config = {
+    let config = {
         host: host,
         port: port,
         poll: poll
     }
-    var socket = Net.connect({ host: config.host, port: config.port })
-    var modbusClient= new Modbus.Client()
-    modbusClient.writer().pipe(socket)
-    socket.pipe(modbusClient.reader())
 
     node = {
         send: function(data){
@@ -153,5 +148,5 @@ module.exports.console = function(host, port, poll){
         }
     }
 
-    fetch_device(modbusClient, "inverter", inverter_json, node, config);
+    connect_and_fetch(config, node);
 }
