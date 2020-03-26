@@ -109,6 +109,12 @@ async function fetch_device(modbusClient, module, mapping_json, node, config){
     });
 }
 
+function trigger_exception(node, socket){
+    node.error(error);
+    socket.destroy();
+    connect_and_fetch(config, node);
+}
+
 async function connect_and_fetch(config, node){
     let socket = Net.connect({ host: config.host, port: config.port });
     let modbusClient= new Modbus.Client();
@@ -126,7 +132,7 @@ module.exports = function(RED) {
     function start_node(config){
         RED.nodes.createNode(this,config);
         let node = this;
-        node.on('close', function(){ socket.destroy(); });
+        node.on('close', function(){ console.log("trigger done action for redeployment"); socket.destroy(); done(); });
         node.on('error', function(error){ node.send(error); socket.destroy(); connect_and_fetch(config); });
 
         connect_and_fetch(config, node);
