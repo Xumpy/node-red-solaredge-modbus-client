@@ -1,8 +1,6 @@
 const Net = require('net');
 const Modbus = require('modbus-tcp');
 
-let redeployment;
-
 inverter_json = [
     [40001, 2, "C_SunSpec_ID", "uint32"],
     [40003, 1, "C_SunSpec_DID", "uint16"],
@@ -117,7 +115,8 @@ function exception_handler(config, node, error){
     node.error(error);
     node.status({fill:"red",shape:"ring",text:"disconnected"});
     var wait = ms => new Promise((r, j)=>setTimeout(r, ms));
-    if (!redeployment) (async () => { await wait(1000); connect_and_fetch(config, node); })()
+    console.log(node);
+    (async () => { await wait(1000); connect_and_fetch(config, node); })()
 }
 
 async function connect_and_fetch(config, node){
@@ -144,7 +143,6 @@ module.exports = function(RED) {
     function start_node(config){
         RED.nodes.createNode(this,config);
         let node = this;
-        redeployment = false;
         node.status({fill:"red",shape:"ring",text:"disconnected"});
 
         connect_and_fetch(config, node);
