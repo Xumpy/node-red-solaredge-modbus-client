@@ -1,7 +1,7 @@
 const Net = require('net');
 const Modbus = require('modbus-tcp');
 
-let redeployment = false;
+let redeployment;
 
 inverter_json = [
     [40001, 2, "C_SunSpec_ID", "uint32"],
@@ -144,6 +144,7 @@ module.exports = function(RED) {
     function start_node(config){
         RED.nodes.createNode(this,config);
         let node = this;
+        let redeployment = false;
         node.status({fill:"red",shape:"ring",text:"disconnected"});
 
         connect_and_fetch(config, node);
