@@ -121,7 +121,7 @@ function exception_handler(config, node, error){
 
 async function connect_and_fetch(config, node){
     let socket;
-    node.on('close', function(){ socket.destroy(); redeployment=true; });
+    node.on('close', function(){ socket.destroy(); node.destroy(); });
     try{
         socket = Net.connect({ host: config.host, port: config.port });
         let modbusClient= new Modbus.Client();
