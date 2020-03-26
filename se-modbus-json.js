@@ -132,7 +132,7 @@ module.exports = function(RED) {
     function start_node(config){
         RED.nodes.createNode(this,config);
         let node = this;
-        node.on('close', function(){ console.log("trigger done action for redeployment"); socket.destroy(); done(); });
+        node.on('close', function(){ console.log("trigger done action for redeployment"); socket.destroy(); node.destroy(); });
         node.on('error', function(error){ node.send(error); socket.destroy(); connect_and_fetch(config); });
 
         connect_and_fetch(config, node);
