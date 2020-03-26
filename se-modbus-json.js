@@ -124,8 +124,8 @@ module.exports = function(RED) {
             socket.destroy();
             start_node(node, config);
         })
-        socket.on("error", (error) => { node.error(error); });
-        modbusClient.on("error", (error) => { node.error(error); });
+        socket.on("error", (error) => { node.error(error); start_node(node, config); });
+        modbusClient.on("error", (error) => { node.error(error); start_node(node, config); });
 
         modbusClient.writer().pipe(socket)
         socket.pipe(modbusClient.reader())
