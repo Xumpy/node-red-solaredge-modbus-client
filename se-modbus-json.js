@@ -115,7 +115,6 @@ function exception_handler(config, node, error){
     node.error(error);
     node.status({fill:"red",shape:"ring",text:"disconnected"});
     var wait = ms => new Promise((r, j)=>setTimeout(r, ms));
-    console.log(node);
     if (!node.stopped) (async () => { await wait(1000); connect_and_fetch(config, node); })()
 }
 
