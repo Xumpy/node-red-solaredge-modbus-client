@@ -133,7 +133,7 @@ module.exports = function(RED) {
         fetch_device(modbusClient, "inverter", inverter_json, node, config);
     }
 
-    RED.nodes.registerType("se-modbus-json",start_node);
+    RED.nodes.registerType("se-modbus",start_node);
 }
 
 module.exports.console = function(host, port, poll){

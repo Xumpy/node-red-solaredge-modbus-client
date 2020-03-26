@@ -1,9 +1,9 @@
 <script type="text/javascript">
-    RED.nodes.registerType('se-modbus-json',{
+    RED.nodes.registerType('se-modbus',{
         category: 'network',
         color: '#a6bbcf',
         defaults: {
-			name: {value:""},
+			name: {value:"Solar Edge Modbus"},
             host: {value:"192.168.1.200"},
 			port: {value:"1502"},
             poll: {value:"1000"}
@@ -17,7 +17,7 @@
     });
 </script>
 
-<script type="text/html" data-template-name="se-modbus-json">
+<script type="text/html" data-template-name="se-modbus">
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
