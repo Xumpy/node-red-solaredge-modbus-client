@@ -95,7 +95,9 @@ async function fetch_device(modbusClient, module, mapping_json, node, config){
         end: mapping_json[mapping_json.length - 1][0] + mapping_json[mapping_json.length - 1][1] - 1
     }
     let result = {NM_Module: module};
-        await fetch_register(modbusClient, device.start, device.end).then(buffer => {
+    await fetch_register(modbusClient, device.start, device.end).then(buffer => {
+        node.status({fill:"green",shape:"dot",text:"connected"});
+
         mapping_json.map(map => {
             result[map[2]] = conv_buffer(buffer, map[0], map[1], map[3], device);
         })
@@ -109,25 +111,43 @@ async function fetch_device(modbusClient, module, mapping_json, node, config){
     });
 }
 
+function exception_handler(config, node, socket, error){
+    var wait = ms => new Promise((r, j)=>setTimeout(r, ms));
+    node.error(error);
+    node.status({fill:"red",shape:"ring",text:"disconnected"});
+    try{
+        socket.destroy();
+    } catch (error){}
+    (async () => { await wait(config.poll); connect_and_fetch(config, node); })()
+}
+
 async function connect_and_fetch(config, node){
-    let socket = Net.connect({ host: config.host, port: config.port });
-    let modbusClient= new Modbus.Client();
+    let socket;
+    try{
+        socket = Net.connect({ host: config.host, port: config.port });
+        let modbusClient= new Modbus.Client();
 
-    node.on('close', function(){ socket.destroy(); });
-    node.on('error', function(error){ node.send(error); socket.destroy(); connect_and_fetch(config); });
-    socket.on('error', function(error){ node.error(error); socket.destroy(); connect_and_fetch(config, node); });
-    modbusClient.on( 'error', function(error){ node.error(error); socket.destroy(); connect_and_fetch(config, node); });
+        node.on('close', function(){ socket.destroy(); });
 
-    modbusClient.writer().pipe(socket);
-    socket.pipe(modbusClient.reader());
+        node.on('error', function(error){ exception_handler(config, node, socket, error); });
+        socket.on('error', function(error){ exception_handler(config, node, socket, error); });
+        modbusClient.on( 'error', function(error){ exception_handler(config, node, socket, error); });
 
-    fetch_device(modbusClient, "inverter", inverter_json, node, config);
+        modbusClient.writer().pipe(socket);
+        socket.pipe(modbusClient.reader());
+
+        fetch_device(modbusClient, "inverter", inverter_json, node, config);
+    } catch (error){
+        exception_handler(config, node, socket, error);
+    }
 }
 
 module.exports = function(RED) {
     function start_node(config){
         RED.nodes.createNode(this,config);
         let node = this;
+        node.status({fill:"red",shape:"ring",text:"disconnected"});
+
         connect_and_fetch(config, node);
     }
 

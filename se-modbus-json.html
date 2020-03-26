@@ -1,7 +1,7 @@
 <script type="text/javascript">
     RED.nodes.registerType('se-modbus',{
         category: 'network',
-        color: '#a6bbcf',
+        color: '#fff665',
         defaults: {
 			name: {value:"Solar Edge Modbus"},
             host: {value:"192.168.1.200"},
@@ -10,7 +10,7 @@
         },
         inputs:0,
         outputs:1,
-        icon: "file.png",
+        icon: "bridge.png",
         label: function() {
             return this.name||"se-modbus";
         }
