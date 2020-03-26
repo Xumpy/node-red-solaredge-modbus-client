@@ -1,2 +1,2 @@
 modbus = require('./se-modbus-json');
-modbus.console("test", "test", 10000);
+modbus.console("192.168.1.200", "1502", "1000");
