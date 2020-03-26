@@ -1,6 +1,8 @@
 const Net = require('net');
 const Modbus = require('modbus-tcp');
 
+let redeployment = false;
+
 inverter_json = [
     [40001, 2, "C_SunSpec_ID", "uint32"],
     [40003, 1, "C_SunSpec_DID", "uint16"],
@@ -115,12 +117,12 @@ function exception_handler(config, node, error){
     node.error(error);
     node.status({fill:"red",shape:"ring",text:"disconnected"});
     var wait = ms => new Promise((r, j)=>setTimeout(r, ms));
-    (async () => { await wait(1000); connect_and_fetch(config, node); })()
+    if (!redeployment) (async () => { await wait(1000); connect_and_fetch(config, node); })()
 }
 
 async function connect_and_fetch(config, node){
     let socket;
-    node.on('close', function(){ socket.destroy(); });
+    node.on('close', function(){ socket.destroy(); redeployment=true; });
     try{
         socket = Net.connect({ host: config.host, port: config.port });
         let modbusClient= new Modbus.Client();
