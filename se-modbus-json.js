@@ -113,8 +113,8 @@ async function connect_and_fetch(config, node){
     let socket = Net.connect({ host: config.host, port: config.port });
     let modbusClient= new Modbus.Client();
 
-    socket.on('error', function(error){ node.error(error); connect_and_fetch(config, node); });
-    modbusClient.on( 'error', function(error){ node.error(error); connect_and_fetch(config, node); });
+    socket.on('error', function(error){ node.error(error); socket.destroy(); connect_and_fetch(config, node); });
+    modbusClient.on( 'error', function(error){ node.error(error); socket.destroy(); connect_and_fetch(config, node); });
 
     modbusClient.writer().pipe(socket);
     socket.pipe(modbusClient.reader());
