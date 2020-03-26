@@ -120,12 +120,12 @@ function exception_handler(config, node, error){
 
 async function connect_and_fetch(config, node){
     let socket;
+    node.on('close', function(){ socket.destroy(); });
     try{
         socket = Net.connect({ host: config.host, port: config.port });
         let modbusClient= new Modbus.Client();
 
-        node.on('close', function(){ socket.destroy(); });
-        node.on('error', function(error){ exception_handler(config, node, error); });
+        node.on('error', function(error){ socket.destroy(); exception_handler(config, node, error); });
         socket.on('error', function(error){ socket.destroy(); exception_handler(config, node, error); });
         modbusClient.on( 'error', function(error){ socket.destroy(); exception_handler(config, node, error); });
 
