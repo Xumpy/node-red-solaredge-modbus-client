@@ -1,7 +1,7 @@
-const Net = require('net');
-const Modbus = require('modbus-tcp');
-
 function ModbusScanner(){
+    const Net = require('net');
+    const Modbus = require('modbus-tcp');
+
     function conv_buffer(buffer, index, length, type, device){
         let buf_byte_length = 2;
         let start = (index - device.start - 1) * buf_byte_length;
