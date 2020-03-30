@@ -1,0 +1,12 @@
+{
+  "config": {
+    "fetch": 4
+  },
+  "data": [
+    [18, 2, "kW_L1", "int32", "Value weight: Watt*10"],
+    [20, 2, "kW_L2", "int32", "Value weight: Watt*10"],
+    [22, 2, "kW_L3", "int32", "Value weight: Watt*10"],
+    [40, 2, "kW_sys", "int32", "Value weight: Watt*10"],
+    [274, 2, "kWh_Plus_TOT", "int32", "Value weight: kWh*10"]
+  ]
+}

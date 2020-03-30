@@ -106,8 +106,8 @@ async function connect_and_fetch(config, node){
 
 function device_to_config(config){
     switch (config.device) {
-        case "se_inverter": config.json = require('config_json/se_inverter.json'); break; // Credits to Brad Slattman
-        case "em300": config.json = require('config_json/em_300.json'); break;
+        case "se_inverter": config.json = require('./config_json/se_inverter.json'); break; // Credits to Brad Slattman
+        case "em300": config.json = require('./config_json/em_300.json'); break;
     }
 
     return config;
