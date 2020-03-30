@@ -123,6 +123,8 @@ module.exports = function(RED) {
         node.stopped = false;
         node.status({fill:"red",shape:"ring",text:"disconnected"});
 
+        if (config.device === undefined) {config.device = "se_inverter"; }
+
         connect_and_fetch(config, node);
     }
 
