@@ -1,6 +1,6 @@
 function ModbusScanner(){
-    const Net = require('net');
-    const Modbus = require('modbus-tcp');
+    const net = require('net');
+    const modbus = require('modbus-tcp');
 
     function conv_buffer(buffer, index, length, type, device){
         let buf_byte_length = 2;
@@ -89,8 +89,8 @@ function ModbusScanner(){
         node.on('close', function(){ node.stopped = true; socket.destroy(); });
         config = device_to_config(config);
         try{
-            socket = Net.connect({ host: config.host, port: config.port });
-            let modbusClient= new Modbus.Client();
+            socket = net.createConnection({ host: config.host, port: config.port });
+            let modbusClient= new modbus.Client();
 
             socket.on('close', function(){ connect_and_fetch(config, node) });
             node.on('error', function(error){ socket.destroy(); exception_handler(config, node, error); });
