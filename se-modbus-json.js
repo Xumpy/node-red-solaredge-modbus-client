@@ -34,8 +34,11 @@ function fetch_register(modbusClient, mapping_json){
     }
 
     return new Promise((resolve, reject) => {
-        modbusClient.readInputRegisters(1, device.start, device.end, (error, buffers) => {
-            if (error) reject(error);
+        modbusClient.readHoldingRegisters(1, device.start, device.end, (error, buffers) => {
+            if (error) {
+                console.log(error);
+                reject(error);
+            }
             resolve({
                 mapping_json: mapping_json,
                 buffer: Buffer.concat(buffers),
