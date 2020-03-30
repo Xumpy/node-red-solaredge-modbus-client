@@ -48,8 +48,8 @@ function fetch_register(modbusClient, mapping_json){
     });
 }
 
-async function fetch_device(modbusClient, module, node, config){
-    let result = {NM_Module: module};
+async function fetch_device(modbusClient, node, config){
+    let result = {NM_Module: config.device};
     let per_item = config.json.config.fetch;
     let data = config.json.data;
     let promises = [];
@@ -71,21 +71,16 @@ async function fetch_device(modbusClient, module, node, config){
         }
         node.send({payload: result});
         setTimeout(function () {
-            fetch_device(modbusClient, module, node, config);
+            fetch_device(modbusClient, node, config);
         }, config.poll);
     }).catch(error => {
         node.send(error);
-        fetch_device(modbusClient, module, node, config);
-    }).finally( function(){
-        if (node.stopped != true) connect_and_fetch(config, node);
     });
 }
 
 function exception_handler(config, node, error){
     node.error(error);
     node.status({fill:"red",shape:"ring",text:"disconnected"});
-    var wait = ms => new Promise((r, j)=>setTimeout(r, ms));
-    if (!node.stopped) (async () => { await wait(1000); await connect_and_fetch(config, node); })()
 }
 
 async function connect_and_fetch(config, node){
@@ -96,6 +91,7 @@ async function connect_and_fetch(config, node){
         socket = Net.connect({ host: config.host, port: config.port });
         let modbusClient= new Modbus.Client();
 
+        socket.on('close', function(){ connect_and_fetch(config, node) });
         node.on('error', function(error){ socket.destroy(); exception_handler(config, node, error); });
         socket.on('error', function(error){ socket.destroy(); exception_handler(config, node, error); });
         modbusClient.on( 'error', function(error){ socket.destroy(); exception_handler(config, node, error); });
@@ -103,7 +99,7 @@ async function connect_and_fetch(config, node){
         modbusClient.writer().pipe(socket);
         socket.pipe(modbusClient.reader());
 
-        await fetch_device(modbusClient, "power", node, config);
+        await fetch_device(modbusClient, node, config);
     } catch (error){
         exception_handler(config, node, error);
     }
