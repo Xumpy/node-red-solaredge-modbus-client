@@ -89,16 +89,17 @@ function ModbusScanner(){
         node.on('close', function(){ node.stopped = true; socket.destroy(); });
         config = device_to_config(config);
         try{
-            socket = net.createConnection({ host: config.host, port: config.port });
-            let modbusClient= new modbus.Client();
+            socket = new net.Socket();
+            modbusClient= new modbus.Client();
+            modbusClient.writer().pipe(socket);
+            socket.pipe(modbusClient.reader());
+            socket.connect({ host: config.host, port: config.port });
 
             socket.on('close', function(){ connect_and_fetch(config, node) });
             node.on('error', function(error){ socket.destroy(); exception_handler(config, node, error); });
             socket.on('error', function(error){ socket.destroy(); exception_handler(config, node, error); });
             modbusClient.on( 'error', function(error){ socket.destroy(); exception_handler(config, node, error); });
 
-            modbusClient.writer().pipe(socket);
-            socket.pipe(modbusClient.reader());
 
             fetch_device(modbusClient, node, config);
         } catch (error){
