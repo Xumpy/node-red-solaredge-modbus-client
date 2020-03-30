@@ -76,6 +76,8 @@ async function fetch_device(modbusClient, module, node, config){
     }).catch(error => {
         node.send(error);
         fetch_device(modbusClient, module, node, config);
+    }).finally( function(){
+        connect_and_fetch(config, node);
     });
 }
 
