@@ -6,7 +6,8 @@
 			name: {value:"Solar Edge Modbus"},
             host: {value:"192.168.1.200"},
 			port: {value:"1502"},
-            poll: {value:"1000"}
+            poll: {value:"1000"},
+            device: {value: "se_inverter"}
         },
         inputs:0,
         outputs:1,
@@ -33,6 +34,13 @@
     <div class="form-row">
         <label for="node-input-poll"><i class="icon-tag"></i> Poller</label>
         <input type="text" id="node-input-poll" placeholder="Poller">
+    </div>
+    <div class="form-row">
+        <label for="node-input-device"><i class="icon-tag"></i> Device</label>
+        <select id="node-input-device">
+            <option value="se_inverter">Solar Edge Inverter</option>
+            <option value="em_300">EM 300 Power Meter</option>
+        </select>
     </div>
 </script>
 
