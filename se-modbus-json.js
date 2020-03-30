@@ -95,7 +95,7 @@ function ModbusScanner(){
             socket.pipe(modbusClient.reader());
             socket.connect({ host: config.host, port: config.port });
 
-            socket.on('close', function(){ connect_and_fetch(config, node) });
+            socket.on('close', function(){ if (!node.stopped) connect_and_fetch(config, node) });
             node.on('error', function(error){ socket.destroy(); exception_handler(config, node, error); });
             socket.on('error', function(error){ socket.destroy(); exception_handler(config, node, error); });
             modbusClient.on( 'error', function(error){ socket.destroy(); exception_handler(config, node, error); });
