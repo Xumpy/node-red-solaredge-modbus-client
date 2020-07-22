@@ -61,6 +61,17 @@ function ModbusScanner(){
 
             promises.push( fetch_register(modbusClient, data.slice(start_index, stop_index)) );
         }
+        
+        if (config.seMeter1) {
+            per_item = config.seMeter1Json.config.fetch;
+            data = config.seMeter1Json.data;
+            for (let i=0; i< Math.ceil(data.length / per_item); i++){
+                let start_index = i * per_item;
+                let stop_index = ((i + 1) * per_item >= data.length ? data.length : (i + 1) * per_item);
+
+                promises.push( fetch_register(modbusClient, data.slice(start_index, stop_index)) );
+            }
+        }
 
         Promise.all(promises).then(promise => {
             node.status({fill:"green",shape:"dot",text:"connected"});
@@ -117,6 +128,10 @@ function device_to_config(config){
     switch (config.device) {
         case "se_inverter": config.json = require('./config_json/se_inverter.json'); break; // Credits to Brad Slattman
         case "em_300": config.json = require('./config_json/em_300.json'); break;
+    }
+
+    if (config.seMeter1) {
+        config.seMeter1Json = require('./config_json/se_meter_1.json');
     }
 
     return config;
