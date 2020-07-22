@@ -7,13 +7,26 @@
             host: {value:"192.168.1.200"},
 			port: {value:"1502"},
             poll: {value:"1000"},
-            device: {value: "se_inverter"}
+            device: {value: "se_inverter"},
+            seMeter1: {value: false}
         },
         inputs:0,
         outputs:1,
         icon: "bridge.png",
         label: function() {
             return this.name||"se-modbus";
+        },
+        oneditprepare: function() {
+            $("#node-input-device").change(function() {
+                var value = $("#node-input-device").val();
+                if (value === "se_inverter") {
+                    $("#node-input-seMeter1").attr("disabled", false);
+                } else {
+                    $("#node-input-seMeter1").prop("checked", false);
+                    $("#node-input-seMeter1").attr("disabled", true);
+                }
+            });
+            $("#node-input-device").change();
         }
     });
 </script>
@@ -41,6 +54,13 @@
             <option value="se_inverter">Solar Edge Inverter</option>
             <option value="em_300">EM 300 Power Meter</option>
         </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-seMeter1"> </label>
+        <label for="node-input-seMeter1" style="width:70%">
+            <input type="checkbox" id="node-input-seMeter1" style="display:inline-block; width:22px; vertical-align:baseline;" autocomplete="off">
+            <span>Include Solar Edge Power Meter (1)</span>
+        </label>
     </div>
 </script>
 
