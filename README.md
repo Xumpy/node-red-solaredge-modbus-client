@@ -1,8 +1,8 @@
 # What is this?
 
-NodeRed node to read SolarEdge Inverter data via the Modbus interface.
+Node Red Modbus Client for Solar Edge solar panels.
 
 # How to install?
 
-'npm -i node-red-contrib-solaredge-modbus-client'
+`npm -i node-red-contrib-solaredge-modbus-client`
 
