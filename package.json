@@ -11,7 +11,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Xumpy/node-red-solaredge-modbus-client.git"
+    "url": "git+https://github.com/apelders/node-red-solaredge-modbus-client.git"
   },
   "author": "Nico Martens",
   "node-red": {
@@ -24,8 +24,8 @@
   },
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Xumpy/node-red-solaredge-modbus-client/issues"
+    "url": "https://github.com/apelders/node-red-solaredge-modbus-client/issues"
   },
-  "homepage": "https://github.com/Xumpy/node-red-solaredge-modbus-client#readme",
+  "homepage": "https://github.com/apelders/node-red-solaredge-modbus-client#readme",
   "devDependencies": {}
 }
