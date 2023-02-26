@@ -1,7 +1,7 @@
 {
   "name": "node-red-contrib-solaredge-modbus-client",
   "version": "1.0.3",
-  "description": "Node Red Modbus Client for SolarEdge solar panels",
+  "description": "Node Red Modbus Client for SolarEdge inverters",
   "author": "Adri Pelders",
   "contributors": [],
   "license": "MIT License",
