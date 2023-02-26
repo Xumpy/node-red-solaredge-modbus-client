@@ -26,12 +26,8 @@
     "version": ">=0.1.0",
     "nodes": {
         "se-modbus": "se-modbus-json.js"
-//  "node-red": {
-//    "version": ">=0.1.0",
-//    "nodes": {
-//      "solaredge": "se-modbus-json.js"
-//    }
-//  },
+    }
+  },
   "dependencies": {
     "modbus-tcp": "^0.4.13"
   },
