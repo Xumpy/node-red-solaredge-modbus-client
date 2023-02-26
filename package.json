@@ -20,7 +20,7 @@
   },
   "keywords": [
     "node-red",
-    "SolarEdge""
+    "SolarEdge"
   ],
   "node-red"     : {
     "version": ">=0.1.0",
