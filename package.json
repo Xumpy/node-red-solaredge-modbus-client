@@ -1,31 +1,35 @@
 {
   "name": "node-red-contrib-solaredge-modbus-client",
-  "version": "1.0.2",
-  "description": "Node Red Modbus Client for Solar Edge solar panels",
+  "version": "1.0.4",
+  "description": "Node Red Modbus Client for SolarEdge inverters",
+  "author": "Adri Pelders",
+  "contributors": [],
+  "license": "MIT License",
+  "homepage": "https://github.com/apelders/node-red-contrib-solaredge-modbus-client/#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apelders/node-red-solaredge-modbus-client.git"
+  },
+  "bugs": {
+    "url": "https://github.com/apelders/node-red-solaredge-modbus-client/issues"
+  },
+  "private": "true",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "node-red"
+    "node-red",
+    "SolarEdge"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Xumpy/node-red-solaredge-modbus-client.git"
-  },
-  "author": "Nico Martens",
-  "node-red": {
+  "node-red"     : {
+    "version": ">=0.1.0",
     "nodes": {
-      "solaredge": "se-modbus-json.js"
+        "se-modbus": "se-modbus-json.js"
     }
   },
   "dependencies": {
     "modbus-tcp": "^0.4.13"
   },
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Xumpy/node-red-solaredge-modbus-client/issues"
-  },
-  "homepage": "https://github.com/Xumpy/node-red-solaredge-modbus-client#readme",
   "devDependencies": {}
 }
